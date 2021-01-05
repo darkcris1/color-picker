@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Color Picker</title>
+	<style type="text/css" media="all">
+		.color-picker {
+			margin-top: 20% auto 0 auto;
+			padding: .5rem .5rem 0;
+			width: calc(200px - 2rem);
+			background: #343a34;
+			display: flex;
+			position: absolute;
+			flex-direction: column;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.color-picker .transparent {
+			background: transparent;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 1rem;
+			position: relative;
+			overflow: hidden;
+			height: 30px;
+		}
+		input[type=range]{
+			width: 100%;
+		}
+		.color-picker .result{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			-webkit-user-select: all;
+			-moz-user-select: all;
+			-ms-user-select: all;
+			user-select: all;
+		}
+		.color-picker .container {
+			display: flex;
+			flex-direction: column;
+		}
+		.color-picker .rgb-sliders {
+			flex: 80%;
+		}
+		.color-picker .resultValue {
+			font-size: 1rem;
+			color: white;
+			text-shadow: 0 0px 4px #000;
+		}
+		.color-picker .rgb-sliders > div {
+			display: flex;
+		
+		}
+		.color-picker .rgb-sliders > div input[type=text] {
+			align-self: center;
+			max-width: 3ch;
+			background: none;
+			border: none;
+			color: white;
+			outline: none;
+			text-align: center;
+		}
+		.color-picker .tools {
+			width: 100%;
+		}
+		.color-picker .tools button {
+			width: 30%;
+			background: none;
+			color: white;
+			font-weight: bolder;
+			border: none;
+			font-size: .80rem;
+			padding: .5rem .375rem;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			outline: none;
+		}
+		.color-picker .tools #copyBtn {
+			float: right;
+		}
+		.transparent table {
+			border-spacing: 0;
+			padding: 0;
+			margin: 0;
+			border-collapse: collapse;
+			height: 100%;
+			width: 100%;
+		}
+		.transparent tr:nth-child(odd) td:nth-child(odd){
+			background: white;
+		}
+		.transparent tr:nth-child(odd) td:nth-child(even){
+			background: grey;
+		}
+		.transparent tr:nth-child(even) td:nth-child(even){
+			background: white;
+		}
+		.transparent tr:nth-child(even) td:nth-child(odd){
+			background: grey;
+		}
+	</style>
+</head>
+<body>
+	<div class="color-picker">
+		<div class="container">
+			<div class="transparent">
+				<table id="transparent-table"></table>
+				<div class="result">
+					<div class="resultValue"></div>
+				</div>
+			</div>
+			<div class="rgb-sliders">
+				<div>
+					<input type="text" readonly id="red_slider"/>
+					<input type="range" name="redSlider" id="redSlider" min="0" max="255" value="99" />
+				</div>
+				<div>
+					<input type="text" readonly id="green_slider" />
+					<input type="range" name="greenSlider" id="greenSlider" min="0" max="255" value="126" />
+				</div>
+				<div>
+					<input type="text" readonly id="blue_slider" />
+					<input type="range" name="blueSlider" id="blueSlider" min="0" max="255" value="100" />
+				</div>
+				<div>
+					<input type="text" readonly id="alpha_slider" />
+					<input type="range" id="alphaSlider" min="0" max="100" value="100" />
+				</div>
+			</div>
+		</div>
+		<div class="tools">
+			<button id="typeChanger">Hex</button>
+			<button id="copyBtn">Copy</button>
+		</div>
+	</div>
+	<script src="colorPicker.js"></script>
+	<script src="range.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		range.create("#blueSlider",{
+			progressColor: "#7fa5f2",
+			trackColor: "grey",
+			height: "3px",
+			margin: "10px 0",
+			zIndex: 1000,
+			thumb:{
+				background: "#7fa5f2",
+				height: "10px",
+				width: "10px",
+				zIndex: -1,
+				hover:{
+					boxShadow: "0 0 0 5px #7fa5f24d"
+				}
+			}
+		})
+		range.create("#redSlider",{
+			progressColor: "#f75a5a",
+			trackColor: "grey",
+			height: "3px",
+			margin: "10px 0",
+			thumb:{
+				background: "#f75a5a",
+				height: "10px",
+				width: "10px",
+				hover:{
+					boxShadow: "0 0 0 5px #f75a5a76"
+				}
+			}
+		})
+		range.create("#greenSlider",{
+			progressColor: "#71e84c",
+			trackColor: "grey",
+			height: "3px",
+			margin: "10px 0",
+			thumb:{
+				background: "#71e84c",
+				height: "10px",
+				width: "10px",
+				hover:{
+					boxShadow: "0 0 0 5px #71e84c71"
+				}
+			}
+		})
+		range.create("#alphaSlider",{
+			progressColor: "lightgrey",
+			trackColor: "grey",
+			height: "3px",
+			margin: "10px 0",
+			thumb:{
+				background: "#d1d1d1",
+				height: "10px",
+				width: "10px",
+				borderRadius: "0px",
+				hover:{
+					boxShadow: "0 0 0 5px #d1d1d147"
+				}
+			}
+		})
+	</script>
+</body>
+</html>
